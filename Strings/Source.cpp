@@ -131,9 +131,39 @@ bool isPalindrom(char* s)
 	return true;
 }
 
+void findDuplicatesBitOperators(char* s)
+{
+	int i, x = 0, H = 0;
+	for (i = 0; i < strlen(s); i++)
+	{
+		x = 1;
+		x = x << s[i]-97;
+		if (x & H)
+			cout << s[i] << " is duplicated ";
+		else
+			H = H | x;
+	}
+}
+
+void findDuplicatesHash(char* s)
+{	
+	int H[26] = {0}, i, length = strlen(s);
+	s = convertCapitalToLower(s);
+
+	for (i = 0; i < length; i++)
+	{	
+		H[s[i] - 97] += 1;
+	}
+	for (i = 0; i < 26; i++)
+	{
+		if (H[i] > 1)
+			cout << (char)(i + 97)<< " duplicates : " << H[i] << " times" << endl;
+	}
+}
+
 int main()
 {
-	char s[] = "Welcome";
+	/*char s[] = "Welcome";
 	cout << "Length : " << strlen(s) << endl;
 
 	toggle(s);
@@ -156,7 +186,8 @@ int main()
 	if (isPalindrom(p))
 		cout << "Palindrom";
 	else
-		cout << "Not Palindrom";
-
+		cout << "Not Palindrom";*/
+	char s[] = "fInding";
+	findDuplicatesHash(s);
 
 }
