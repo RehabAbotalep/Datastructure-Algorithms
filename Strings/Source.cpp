@@ -11,7 +11,7 @@ int strlen(char* s)
 
 void toggle(char* s)
 {
-	for (int i = 0; i < strlen(s); i++)
+	for (int i = 0; s[i]!='\0'; i++)
 	{
 		if (s[i] >= 65 && s[i] <= 90)
 			s[i] += 32;
@@ -59,7 +59,7 @@ void countVowelsAndConsonents(char* s)
 int countWords(char* s)
 {
 	int words = 1;
-	for (int i = 0; i < strlen(s); i++)
+	for (int i = 0; s[i] != '\0'; i++)
 	{
 		if (s[i] == ' ' && s[i - 1] != ' ')
 			words++;
@@ -70,7 +70,7 @@ int countWords(char* s)
 //special characters are not allowed
 bool isValid(char* s)
 {
-	for (int i = 0; i < strlen(s); i++)
+	for (int i = 0; s[i] != '\0'; i++)
 	{
 		if (!(s[i] >= 65 && s[i] <= 90) && (!(s[i] >= 97 && s[i] <= 122)) && (!(s[i] >= 48 && s[i] <= 57)))
 			return false;
@@ -92,7 +92,7 @@ void reverse(char* s)
 
 char* convertCapitalToLower(char* s)
 {
-	for (int i = 0; i < strlen(s); i++)
+	for (int i = 0; s[i] != '\0'; i++)
 	{
 		if (s[i] >= 65 && s[i] <= 90)
 			s[i] += 32;
@@ -105,7 +105,7 @@ void compare(char* A, char* B)
 	int i, j;
 	A = convertCapitalToLower(A);
 	B = convertCapitalToLower(B);
-	for (i = 0, j = 0; i < strlen(A) && j < strlen(B); i++, j++)
+	for (i = 0, j = 0; A[i] != '\0' && B[i] != '\0'; i++, j++)
 	{
 		if (A[i] != B[j])
 			break;
@@ -134,7 +134,7 @@ bool isPalindrom(char* s)
 void findDuplicatesBitOperators(char* s)
 {
 	int i, x = 0, H = 0;
-	for (i = 0; i < strlen(s); i++)
+	for (i = 0; s[i] != '\0'; i++)
 	{
 		x = 1;
 		x = x << s[i]-97;
@@ -145,7 +145,7 @@ void findDuplicatesBitOperators(char* s)
 	}
 }
 
-void findDuplicatesHash(char* s)
+void findDuplicatesUsingHash(char* s)
 {	
 	int H[26] = {0}, i, length = strlen(s);
 	s = convertCapitalToLower(s);
@@ -161,9 +161,32 @@ void findDuplicatesHash(char* s)
 	}
 }
 
+bool isAnagram(char* A, char* B)
+{
+	int i, H[26] = { 0 };
+
+	if (strlen(A) != strlen(B))
+		return false;
+
+	A = convertCapitalToLower(A);
+	B = convertCapitalToLower(B);
+
+	for (i = 0; A[i] != '\0'; i++)
+	{
+		H[A[i] - 97] += 1;
+	}
+	for (i = 0; B[i] != '\0'; i++)
+	{
+		H[B[i] - 97] -= 1;
+		if (H[B[i] - 97] != 0)
+			return false;
+	}
+	return true;
+}
+
 int main()
 {
-	/*char s[] = "Welcome";
+	char s[] = "Welcome";
 	cout << "Length : " << strlen(s) << endl;
 
 	toggle(s);
@@ -178,16 +201,22 @@ int main()
 
 	reverse(s);
 
-	char A[] = "PAINTer";
-	char B[] = "painter";
+	char A[] = "SPAINTer";
+	char B[] = "paintEr";
 	compare(A, B);
 
 	char p[] = "Azza";
 	if (isPalindrom(p))
-		cout << "Palindrom";
+		cout << "Palindrom" << endl;
 	else
-		cout << "Not Palindrom";*/
-	char s[] = "fInding";
-	findDuplicatesHash(s);
+		cout << "Not Palindrom" << endl;
+
+	char A1[] = "decimal";
+	char A2[] = "medical";
+
+	if (isAnagram(A, B))
+		cout << "Anagram";
+	else
+		cout << "Not anagram";
 
 }
