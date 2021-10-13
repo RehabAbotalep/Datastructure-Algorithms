@@ -96,9 +96,34 @@ void MergeSort(int A[], int low, int high)
 	}
 }
 
+int Partition(int A[], int l, int h)
+{
+	int i = l, j = h;
+	int pivot = A[l];
+	do {
+		do { i++; } while (A[i] <= pivot);
+		do { j--; } while (A[j] > pivot);
+		if (i < j) Swap(&A[i], &A[j]);
+
+	} while (i < j);
+	Swap(&A[l], &A[j]);
+	return j;
+}
+
+void QuickSort(int A[], int l, int h)
+{
+	int j;
+	if (l < h)
+	{
+		j = Partition(A, l, h);
+		QuickSort(A, l, j);
+		QuickSort(A, j + 1, h);
+	}
+}
+
 int main()
 {	
-	char A[] = { 'b','a','c','d'};
+	char A[] = {'b','a','c','d'};
 	int n = sizeof(A)/sizeof(A[0]);
 	
 	Print(A, n, "Before sorting");
@@ -121,6 +146,16 @@ int main()
 	Print(c, size, "Before sorting");
 	MergeSort(c,0, 7);
 	Print(c, size, "After Merge sorting");
+
+	int D[] = { 8,2,9,6,5,3,7,4 };
+	int qs = sizeof(D) / sizeof(D[0]);
+
+	cout << "----------------------------------" << endl;
+	Print(D, qs, "Before sorting");
+
+	QuickSort(D, 0, 8);
+	Print(D, qs, "After sorting");
+
 
 
 
